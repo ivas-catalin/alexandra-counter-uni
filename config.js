@@ -16,10 +16,10 @@ export const GRADUATION_DATE = '2030-07-01';
 // Example: '2027-07-15T12:00:00+03:00' previews the first summer break.
 export const PREVIEW_NOW = null;
 export const UPDATE_INTERVAL_MS = 100;
-export const BAT_FIRST_VISIT_MS = 100;
+export const BAT_FIRST_VISIT_MS = 9000;
 export const BAT_INTERVAL_MS = { min: 35000, max: 65000 };
 export const BAT_FLIGHT_MS = 6800;
-export const BAT_FLOCK_SIZE = { min: 3, max: 3 };
+export const BAT_FLOCK_SIZE = { min: 1, max: 3 };
 export const BAT_DEPARTURE_GAP_MS = { min: 1000, max: 2100 };
 export const BAT_VERTICAL_CHANCE = 0.3;
 export const BAT_SPLIT_CHANCE = 0.65;
