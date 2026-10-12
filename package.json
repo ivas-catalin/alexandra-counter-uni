@@ -1,0 +1,12 @@
+{
+  "name": "moonshine-uni-counter",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A little moonlit countdown to becoming an engineer.",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "test": "node --test tests/*.test.js",
+    "build": "node scripts/build.mjs"
+  }
+}

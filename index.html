@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#081511">
+    <meta name="description" content="Relax Moonshine, you are going to be an engineer. Every moment, a little closer.">
+    <title>pentru Alexandra</title>
+    <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml">
+    <link rel="preload" href="assets/fonts/unifraktur-maguntia.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="assets/fonts/pirata-one.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <svg class="filter-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="painted-ink" x="-3%" y="-8%" width="106%" height="116%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency=".025 .32" numOctaves="3" seed="17" result="fibers"/>
+          <feDisplacementMap in="SourceGraphic" in2="fibers" scale="1.1" xChannelSelector="R" yChannelSelector="G" result="brushwork"/>
+          <feColorMatrix in="fibers" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  .38 .38 .38 0 .22" result="pigment"/>
+          <feComposite in="brushwork" in2="pigment" operator="in"/>
+        </filter>
+      </defs>
+    </svg>
+    <div class="night" aria-hidden="true">
+      <div class="paint paint--broad"></div>
+      <div class="paint paint--grain"></div>
+      <div class="star-field" id="star-field"></div>
+      <div class="lace lace--top"></div><div class="lace lace--right"></div>
+      <div class="lace lace--bottom"></div><div class="lace lace--left"></div>
+    </div>
+
+    <main class="keepsake">
+      <header class="message">
+        <h1><span class="greeting">Relax Moonshine</span><span class="promise">you are going to be</span><span class="engineer">an engineer</span></h1>
+      </header>
+
+      <section class="journey" aria-label="Your journey to becoming an engineer">
+        <button class="degree" id="precision-toggle" type="button" aria-expanded="false" aria-controls="degree-extra" aria-label="Show four more decimal places">
+          <span class="degree__track"><span class="degree__fill" id="degree-fill"></span></span>
+          <span class="percentage percentage--degree" aria-hidden="true"><span id="degree-main">0.00</span><span class="percentage__extra" id="degree-extra" hidden>0000</span><span class="percentage__sign">%</span></span>
+        </button>
+        <div class="sr-only" id="degree-accessible" role="progressbar" aria-label="Degree completed" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+
+        <div class="chapters">
+          <section class="chapter" aria-labelledby="year-label">
+            <h2 id="year-label" lang="ro">Anul <span id="year-roman">I</span></h2>
+            <div class="percentage percentage--chapter" id="year-percentage"><span id="year-main">0.00</span><small class="percentage__extra" id="year-extra">0000</small><span class="percentage__sign">%</span></div>
+          </section>
+          <section class="chapter" aria-labelledby="period-label">
+            <h2 id="period-label" lang="ro">Semestrul <span id="semester-roman">I</span></h2>
+            <div class="percentage percentage--chapter" id="period-percentage"><span id="period-main">0.00</span><small class="percentage__extra" id="period-extra">0000</small><span class="percentage__sign">%</span></div>
+          </section>
+        </div>
+      </section>
+
+      <noscript><p class="notice">Enable JavaScript to watch your journey unfold.</p></noscript>
+      <p class="notice" id="error-notice" role="alert" hidden></p>
+    </main>
+
+    <div class="painted-surface painted-surface--strokes" aria-hidden="true"></div>
+    <div class="painted-surface painted-surface--pigment" aria-hidden="true"></div>
+    <div class="keepsake-objects" aria-hidden="true">
+      <div class="moon"><div class="moon__halo"></div><img src="assets/moon.webp" alt="" width="1280" height="1280"></div>
+      <img class="pendant" src="assets/heartagram.webp" alt="" width="1280" height="1280">
+      <img class="chains" src="assets/chains.webp" alt="" width="1280" height="1280">
+    </div>
+    <div class="bat-layer" id="bat-layer" aria-hidden="true"></div>
+    <template id="bat-template"><div class="bat"><svg viewBox="0 0 160 72"><g class="bat__left"><path d="M79 34C55 29 29 6 3 4C19 19 15 39 10 46C30 34 39 40 43 53C53 41 66 45 75 62Z"/></g><g class="bat__right"><path d="M81 34C105 29 131 6 157 4C141 19 145 39 150 46C130 34 121 40 117 53C107 41 94 45 85 62Z"/></g><path d="M70 26L69 13L79 22L89 13L90 28C101 43 90 59 80 68C70 59 60 42 70 26Z"/></svg></div></template>
+  </body>
+</html>
