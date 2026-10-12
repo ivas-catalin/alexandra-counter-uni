@@ -28,7 +28,7 @@ For a date preview, set `PREVIEW_NOW` in `config.js` to an ISO timestamp with it
 
 Colours, layout, and paint strengths (`--brush-strength` and `--pigment-strength`) are at the top of **[styles.css](./styles.css)**. Brush textures blend across the sky, lace, text, and counters; an additional SVG pigment filter gives the lettering and progress bar uneven coverage and slightly rough edges. The moon, chains, pendant, and bats sit above the painted surface.
 
-Bat timings, `BAT_FLOCK_SIZE`, and `STARS` settings are in `config.js`. Each visit brings a random 1–3 bats on smooth curved paths between the middle of the progress bar and the lower-right corner. Flights alternate randomly between ascending and descending, sometimes nearly vertically, and flocks can separate into different paths. Departures are spaced 1–2.1 seconds apart, with independently varied sizes, speeds, and wingbeats. Adjust `BAT_DEPARTURE_GAP_MS`, `BAT_VERTICAL_CHANCE`, and `BAT_SPLIT_CHANCE` to tune this behaviour. Stars vary in size and brightness, with soft bloom; approximately 46% flicker on independent 1.8–4.6 second cycles while the rest stay still. Star density adapts to the viewport. Reduced-motion preferences stop decorative animation. Background tabs pause the stars and clock and clear the current flock until the page is visible again.
+Bat timings, `BAT_FLOCK_SIZE`, and `STARS` settings are in `config.js`. Each visit brings a random 1–3 bats, exclusively between two edge locations: the right edge at the progress bar's height, and the bottom edge beneath the bar's midpoint. Every flight starts and finishes fully outside the viewport, without fading in or out. Directions reverse randomly; curves can separate while retaining the same endpoints. Bats accelerate on entry and exit, with varied speeds, sizes, and wingbeats. Departures are spaced 1–2.1 seconds apart. Adjust `BAT_DEPARTURE_GAP_MS` and `BAT_SPLIT_CHANCE` to tune the spacing and path variation. Stars vary in size and brightness, with soft bloom; approximately 46% flicker on independent 1.8–4.6 second cycles while the rest stay still. Star density adapts to the viewport. Reduced-motion preferences stop decorative animation. Background tabs pause the stars and clock and clear the current flock until the page is visible again.
 
 ## Preview locally
 
@@ -48,6 +48,10 @@ npm run build
 ```
 
 The build copies only the public page, scripts, fonts, and artwork into **`dist/`**. Tests cover date boundaries, summer progress, all four years, graduation, leap day, daylight-saving changes, decimal precision, and invalid configuration.
+
+## Host on Cloudflare Workers from GitHub
+
+For the `alexandra-counter-uni` Worker, use build command **`npm run build`** and deploy command **`npx wrangler deploy`**, with the repository root as the root directory. Commit `wrangler.jsonc`: its `assets.directory` is `./dist`, so only the built public files are uploaded. Do not set this to `.`; that would include development files and installed dependencies. Push these changes to the connected production branch to trigger a new deployment.
 
 ## Host on Cloudflare Pages
 

@@ -21,7 +21,6 @@ export const BAT_INTERVAL_MS = { min: 35000, max: 65000 };
 export const BAT_FLIGHT_MS = 6800;
 export const BAT_FLOCK_SIZE = { min: 1, max: 3 };
 export const BAT_DEPARTURE_GAP_MS = { min: 1000, max: 2100 };
-export const BAT_VERTICAL_CHANCE = 0.3;
 export const BAT_SPLIT_CHANCE = 0.65;
 
 // Night sky: random positions, mostly small stars, with only some twinkling.

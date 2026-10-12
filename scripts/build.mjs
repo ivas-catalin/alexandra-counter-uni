@@ -8,4 +8,4 @@ for (const file of ['index.html', 'styles.css', 'app.js', 'config.js', 'counter.
   await cp(file, `dist/${file}`);
 }
 await cp('assets', 'dist/assets', { recursive: true, filter: source => !source.endsWith('.md') && !source.endsWith('.png') });
-console.log('Ready for Cloudflare Pages: upload the dist/ folder.');
+console.log('Ready for Cloudflare: public files are in dist/.');

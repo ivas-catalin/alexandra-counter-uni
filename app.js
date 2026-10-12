@@ -1,10 +1,10 @@
 import {
   TIME_ZONE, ACADEMIC_YEARS, GRADUATION_DATE, PREVIEW_NOW, UPDATE_INTERVAL_MS,
   BAT_FIRST_VISIT_MS, BAT_INTERVAL_MS, BAT_FLIGHT_MS, BAT_FLOCK_SIZE,
-  BAT_DEPARTURE_GAP_MS, BAT_VERTICAL_CHANCE, BAT_SPLIT_CHANCE, STARS,
+  BAT_DEPARTURE_GAP_MS, BAT_SPLIT_CHANCE, STARS,
 } from './config.js';
 import { makeSchedule, getProgress, percentageParts } from './counter.js';
-import { makeFlightFrames } from './bat-flight.js';
+import { makeFlightFrames, makeFlightEndpoints } from './bat-flight.js';
 
 const byId = id => document.getElementById(id);
 const toggle = byId('precision-toggle');
@@ -134,12 +134,13 @@ function flyFlock() {
   const count = Math.floor(randomBetween(BAT_FLOCK_SIZE.min, BAT_FLOCK_SIZE.max + 1));
   const baseSize = window.innerWidth <= 700 ? 76 : 100;
   const bar = document.querySelector('.degree__track').getBoundingClientRect();
-  // The flight area stretches from the middle of the bar to the lower-right edge.
+  // Only the two marked edge locations are used, always beyond the viewport.
+  const padding = baseSize * 1.5;
   const bounds = {
     left: bar.left + bar.width / 2,
-    right: window.innerWidth + baseSize * 0.6,
-    top: bar.bottom + 12,
-    bottom: window.innerHeight - Math.max(42, window.innerHeight * 0.1),
+    right: window.innerWidth + padding,
+    top: bar.top + bar.height / 2,
+    bottom: window.innerHeight + padding,
   };
   if (bounds.bottom <= bounds.top + baseSize) {
     nextFlock(randomBetween(BAT_INTERVAL_MS.min, BAT_INTERVAL_MS.max));
@@ -148,36 +149,19 @@ function flyFlock() {
   const areaWidth = bounds.right - bounds.left;
   const areaHeight = bounds.bottom - bounds.top;
   const ascending = Math.random() < 0.5;
-  const vertical = Math.random() < BAT_VERTICAL_CHANCE;
   const split = count > 1 && Math.random() < BAT_SPLIT_CHANCE;
-  const verticalX = bounds.left + areaWidth * randomBetween(0.35, 0.72);
-  const upper = { x: vertical ? verticalX : bounds.left + baseSize * 0.3, y: bounds.top + baseSize * 0.28 };
-  const lower = { x: vertical ? verticalX : bounds.right, y: bounds.bottom - baseSize * 0.2 };
-  const commonStart = ascending ? lower : upper;
-  const commonEnd = ascending ? upper : lower;
-  const departureVector = {
-    x: (commonEnd.x - commonStart.x) * 0.32,
-    y: (commonEnd.y - commonStart.y) * 0.32,
-  };
-  const keepInside = point => ({
-    x: Math.max(bounds.left, Math.min(bounds.right, point.x)),
-    y: Math.max(bounds.top, Math.min(bounds.bottom, point.y)),
+  const { start, end } = makeFlightEndpoints({
+    width: window.innerWidth, height: window.innerHeight, bar, padding, ascending,
   });
+  const departureVector = {
+    x: (end.x - start.x) * 0.32,
+    y: (end.y - start.y) * 0.32,
+  };
+  const commonBend = randomBetween(-0.18, 0.18);
   let departureDelay = 0;
   for (let i = 0; i < count; i++) {
     const bat = batTemplate.content.firstElementChild.cloneNode(true);
     const size = baseSize * randomBetween(.78, 1.06);
-    const lane = (i - (count - 1) / 2) * baseSize * 0.6;
-    const start = keepInside({
-      x: commonStart.x + (vertical ? lane : randomBetween(-18, 18)),
-      y: commonStart.y + (vertical ? randomBetween(-12, 12) : lane * 0.55),
-    });
-    const end = keepInside({
-      x: split && i > 0
-        ? bounds.left + areaWidth * (0.2 + 0.55 * i / (count - 1))
-        : commonEnd.x + (vertical ? lane * 1.3 : randomBetween(-22, 22)),
-      y: commonEnd.y + randomBetween(-18, 18),
-    });
     const properties = {
       '--bat-size': `${size}px`,
       '--wingbeat': `${randomBetween(.18, .3)}s`,
@@ -188,11 +172,13 @@ function flyFlock() {
     batLayer.append(bat);
     const frames = makeFlightFrames(start, end, {
       size, bounds, departureVector,
-      bend: Math.min(areaWidth, areaHeight) * randomBetween(-0.32, 0.32),
+      bend: Math.min(areaWidth, areaHeight) * (split ? randomBetween(-0.38, 0.38) : commonBend + randomBetween(-0.04, 0.04)),
       bank: randomBetween(3, 9),
+      dash: randomBetween(0.55, 0.8),
+      surge: randomBetween(0.05, 0.15),
     });
     const flight = bat.animate(frames, {
-      duration: BAT_FLIGHT_MS * randomBetween(.95, 1.18),
+      duration: BAT_FLIGHT_MS * randomBetween(.72, 1.25),
       delay: departureDelay,
       easing: 'linear',
       fill: 'both',
