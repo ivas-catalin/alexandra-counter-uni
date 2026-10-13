@@ -4,7 +4,7 @@ import { cp, mkdir, rm } from 'node:fs/promises';
 await rm('dist', { recursive: true, force: true });
 // No dependencies or compilation needed: only the public files go into dist/.
 await mkdir('dist', { recursive: true });
-for (const file of ['index.html', 'styles.css', 'app.js', 'config.js', 'counter.js', 'bat-flight.js', '_headers']) {
+for (const file of ['index.html', 'styles.css', 'app.js', 'config.js', 'counter.js', 'bat-flight.js', 'pendant.js', 'chain-physics.js', '_headers']) {
   await cp(file, `dist/${file}`);
 }
 await cp('assets', 'dist/assets', { recursive: true, filter: source => !source.endsWith('.md') && !source.endsWith('.png') });

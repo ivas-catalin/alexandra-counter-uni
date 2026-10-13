@@ -5,10 +5,12 @@ import {
 } from './config.js';
 import { makeSchedule, getProgress, percentageParts } from './counter.js';
 import { makeFlightFrames, makeFlightEndpoints } from './bat-flight.js';
+import { initPendant } from './pendant.js';
 
 const byId = id => document.getElementById(id);
 const toggle = byId('precision-toggle');
 const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+initPendant(byId('pendant'), motion);
 const batTemplate = byId('bat-template');
 const batLayer = byId('bat-layer');
 const activeBats = new Map();

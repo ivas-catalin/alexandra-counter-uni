@@ -32,6 +32,8 @@ Bat timings, `BAT_FLOCK_SIZE`, and `STARS` settings are in `config.js`. Each vis
 
 ## Preview locally
 
+The necklace has two fixed anchors, articulated chain segments, and a weighted pendant that rotates independently. Drag it with a mouse or touch: the links bend while maintaining their lengths, then gravity and damping settle the necklace after release. Arrow keys nudge it and Home resets it. The chain uses complete shaded metal rings so folds cannot reveal cut image edges; the original pendant artwork is preserved. Reduced-motion preferences disable idle movement and release inertia. The broad paint overlays cover the entire viewport without repeating, avoiding visible tile seams on large screens. The moon sits 4% of its own diameter inward from its original position, with a halo that expands and contracts over a gentle 12-second cycle.
+
 Requires Node.js, with no packages to install:
 
 ```sh
